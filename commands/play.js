@@ -19,7 +19,7 @@ module.exports = {
 		const voiceChannel = message.member.voice.channel;
 		if(!voiceChannel || voiceChannel.id !== process.env.vcid) {
 			embed.setTitle('Command Failed')
-			.setDescription(`Please join <#${process.env.vcid}.`);
+			.setDescription(`Please join <#${process.env.vcid}>.`);
 			return message.channel.send({embeds:[embed]});
 		}
 
@@ -38,7 +38,16 @@ module.exports = {
 			return message.channel.send({ embeds: [embed] });
 		}
 
-		if(!ytdl.validateURL(url)) url = (await yts({query: message.content.slice(7)})).videos[0].url;
+		if(!ytdl.validateURL(url)) {
+			url = await yts({query: message.content.slice(7)});
+			if(url.videos.length == 0) {
+				embed.setTitle('Command Failed')
+				.setDescription(`No search results found.`);
+				return message.channel.send({embeds:[embed]});
+			} else {
+				url = url.videos[0].url;
+			}
+		}
 
 		const streaminfo = await ytdl.getInfo(url);
 		const song = {
