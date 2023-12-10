@@ -55,7 +55,6 @@ module.exports = {
 		} else {
 			try {
 				const player = createAudioPlayer();
-				// idfk bro is this code needed? i feel like some of this is being done in the next section but im not a js guy
 				player.on(AudioPlayerStatus.Idle, () => {
 					queue.songs.shift();
 					if(queue.songs.length > 1) {
@@ -69,7 +68,6 @@ module.exports = {
 				queue.songs.push(song);
 				playNextSong(player, queue);
 
-				// vaneer indent the thing if you want to use .this()
 				embed.setTitle(`Now Playing: ${song.title}`)
 					.setDescription("0:00 - " + api.calculateTotalSongLength(song.duration));
 			} catch(error) {
