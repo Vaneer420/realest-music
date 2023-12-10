@@ -2,6 +2,7 @@ const ytdl = require('ytdl-core');
 const yts = require('yt-search');
 const {createAudioPlayer, createAudioResource, joinVoiceChannel, AudioPlayerStatus} = require('@discordjs/voice');
 const {EmbedBuilder} = require('discord.js');
+const api = require("../api.js");
 
 module.exports = {
 	name: 'play',
@@ -50,15 +51,14 @@ module.exports = {
 		if(queue.songs.length !== 0) {
 			queue.songs.push(song);
 			embed.setTitle(`Queued: ${song.title}`)
-			.setDescription(`[${song.title}](${song.url}) has been queued and will play soon! Check the queue with \`m!queue\` to see when.`);	
+			.setDescription(`[${song.title}](${song.url}) has been queued and will play soon! Check the queue with \`m!queue\` to see when.`);
 		} else {
 			try {
 				const player = createAudioPlayer();
 				player.on(AudioPlayerStatus.Idle, () => {
 					queue.songs.shift();
 					if(queue.songs.length > 1) {
-						embed.setTitle(`Now Playing: ${song.title}`)
-						.setDescription(`\`00:00 - ${`${String(Math.floor(song.duration / 60)).padStart(2, '0')}:${String(song.duration % 60).padStart(2, '0')}`}\``);
+						embed.setTitle(`not implemented`)
 					}
 					playNextSong(player, queue);
 				});
@@ -67,8 +67,9 @@ module.exports = {
 				});
 				queue.songs.push(song);
 				playNextSong(player, queue);
+
 				embed.setTitle(`Now Playing: ${song.title}`)
-				.setDescription(`\`00:00 - ${`${String(Math.floor(song.duration / 60)).padStart(2, '0')}:${String(song.duration % 60).padStart(2, '0')}`}\``);
+					.setDescription("0:00 - " + api.calculateTotalSongLength(song.duration));
 			} catch(error) {
 				console.error(error);
 				embed.setTitle('Command Failed')

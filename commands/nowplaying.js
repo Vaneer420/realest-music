@@ -1,4 +1,5 @@
 const {EmbedBuilder} = require('discord.js');
+const api = require("../api.js");
 
 module.exports = {
 	name: 'nowplaying',
@@ -16,7 +17,7 @@ module.exports = {
 
 		if(queue.connection != null) {
 			const player = queue.connection.state.subscription.player;
-			embed.setDescription(`[${queue.songs[0].title}](${queue.songs[0].url})\n\`${`${String(Math.floor(player.state.playbackDuration / 1000 / 60)).padStart(2, '0')}:${String(Math.floor(player.state.playbackDuration / 1000 % 60)).padStart(2, '0')}`} - ${`${String(Math.floor(queue.songs[0].duration / 60)).padStart(2, '0')}:${String(queue.songs[0].duration % 60).padStart(2, '0')}`}\``);
+			embed.setDescription(`[${queue.songs[0].title}](${queue.songs[0].url})\n\`${`${String(Math.floor(player.state.playbackDuration / 1000 / 60)).padStart(2, '0')}:${String(Math.floor(player.state.playbackDuration / 1000 % 60)).padStart(2, '0')}`} - ${String(api.calculateTotalSongLength(queue.songs[0].duration))}\``);
 		} else {
 			embed.setTitle('Command Failed')
 			.setDescription('The bot is not currently playing anything.');
