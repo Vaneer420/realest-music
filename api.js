@@ -1,12 +1,6 @@
-/**
- * god knows
- */
 module.exports = {
 	/**
-	 * gets the playing time because vaneer is shit at coding; the code to calculate this shit is repeated so now im fixing it lmao
-	 * sowwy that sounded a lot harser than it should have, don't take it personally alright
-	 *
-	 * if there is an easier way to do this then im going to quit javascript entirely
+	 * calculates the total playing time, so you don't have to repeat the same lines of code over and over again
 	 * @param {string (but please send in a number)} duration usually from song.duration, but as long as its the "seconds for how long the song is" then we'd be good
 	 * @returns **string** that you can just pass into .setDescription. this will not include the time. blockquotes (``) aren't included
 	 * @author github/williamanimate
