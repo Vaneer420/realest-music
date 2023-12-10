@@ -1,6 +1,6 @@
 # Realest Music
 
-The RR custom-made music bot [I](https://github.com/vaneer) made for my friends.
+The RR custom-made music bot [I](https://github.com/Vaneer420) made for my friends.
 
 ## Commands
 
