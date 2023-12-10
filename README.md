@@ -1,5 +1,7 @@
 # Realest Music
-# The RR custom-made music bot!
+
+The RR custom-made music bot [I](https://github.com/vaneer) made for my friends.
+
 ## Commands
 
 - `m!help` - Displays commands and allows you to view information on other commands
@@ -10,11 +12,14 @@
 - `m!resume` - Resumes the current song, if paused.
 - `m!skip` - Skips whatever's currently playing.
 
-## If you want to host this yourself:
-1. Clone the repository and extract it.
-2. Install [Node.js](https://nodejs.org/en) if not already installed as well as NPM (included as a checkbox in the node.js installer).
-3. Open a terminal in the repository clone directory and run `npm i`.
-4. Rename *.envexample* to *.env* and fill all the environment variables out.
-5. Run `node index` in the home directory of the clone.
+## If you want to host this yourself
+
+1. Clone the repository with `git clone https://github.com/Vaneer420/realest-music.git` or use the offical github CLI with `gh repo clone Vaneer420/realest-music`
+1. Install [Node.js](https://nodejs.org/en) if not already installed as well as NPM (included as a checkbox in the node.js installer).
+1. Open a terminal in the repository clone directory and run `npm i`.
+1. Rename *.envexample* to *.env* and fill all the environment variables out.
+1. Run `node index` in the home directory of the clone.
+
 ---
+
 [Realist Music](https://github.com/Vaneer420/realest-music) by @vaneer on Discord is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
