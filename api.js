@@ -12,15 +12,13 @@ module.exports = {
 	 * @author github/williamanimate
 	 */
 	calculateTotalSongLength(duration) {
-		if (duration == undefined)
-			console.error("you fucking idiot, you forgot to pass in a duration, too bad! im going to try and find the value anyway. expect NaN");
+		if(duration == undefined) return "some line of code forgot the duration lmao, enjoy this very sick end timestamp";
 
 		// TODO: implement days, but youtube doesn't allow videos over 24 hours (citation needed), so probably not an issue?
 		let hrs = Math.floor(duration / 3600) < 10 ? "0" + Math.floor(duration / 3600) : Math.floor(duration / 3600);
 		let mins = Math.floor((duration - (hrs * 3600)) / 60) < 10 ? "0" + Math.floor((duration - (hrs * 3600)) / 60) : Math.floor((duration - (hrs * 3600)) / 60);
 		let secs = duration - (hrs * 3600) - (mins * 60) < 10 ? "0" + (duration - (hrs * 3600) - (mins * 60)) : duration - (hrs * 3600) - (mins * 60);
 
-		// trying to piss vaneer off day 1
-		return hrs + ":" + mins + ":" + secs;
+		return `${hrs}:${mins}:${secs}`;
 	},
 };
