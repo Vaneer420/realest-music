@@ -78,7 +78,7 @@ module.exports = {
 				playNextSong(player, queue);
 
 				embed.setTitle(`Now Playing: ${song.title}`)
-					.setDescription("0:00 - " + api.calculateTotalSongLength(song.duration));
+					.setDescription("0:00 - " + `\`${api.calculateTotalSongLength(song.duration)}\``);
 			} catch(error) {
 				console.error(error);
 				embed.setTitle('Command Failed')
