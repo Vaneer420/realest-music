@@ -24,10 +24,10 @@ module.exports = {
 
 	/**
 	 * returns an embed.
-	 * @param {string} text customied footer text message
+	 * @param {string} *optional* text customied footer text message
 	 * @returns EmbedBuilder thingy
 	 */
-	prepareEmbedMessages(text) {
+	prepareEmbedMessages(text = "https://github.com/Vaneer420/realest-music") {
 		console.log("its working");
 		let embed = new EmbedBuilder
 			.setFooter({
