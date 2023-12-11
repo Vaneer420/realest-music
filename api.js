@@ -24,12 +24,14 @@ module.exports = {
 
 	/**
 	 * returns an embed.
-	 * @param {string} *optional* text customied footer text message
+	 * @param {string} text customied footer text message
 	 * @returns EmbedBuilder thingy
 	 */
-	prepareEmbedMessages(text = "https://github.com/Vaneer420/realest-music") {
+	prepareEmbedMessage(text = "https://github.com/Vaneer420/realest-music") {
 		console.log("its working");
 		let embed = new EmbedBuilder
+			.setColor('#18BCDC')
+			.setThumbnail(client.user.avatarURL({size: 512}))
 			.setFooter({
 				text: text,
 				iconURL: 'https://files.softicons.com/download/social-media-icons/flat-gradient-social-icons-by-guilherme-lima/png/512x512/Github.png'
