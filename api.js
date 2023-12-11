@@ -3,7 +3,6 @@ module.exports = {
 	 * calculates the total playing time, so you don't have to repeat the same lines of code over and over again
 	 * @param {string (but please send in a number)} duration usually from song.duration, but as long as its the "seconds for how long the song is" then we'd be good
 	 * @returns **string** that you can just pass into .setDescription. this will not include the time. blockquotes (``) aren't included
-	 * @author github/williamanimate
 	 */
 	calculateTotalSongLength(duration) {
 		if(duration == undefined) return "some line of code forgot the duration lmao, enjoy this very sick end timestamp";
