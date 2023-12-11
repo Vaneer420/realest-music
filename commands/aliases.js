@@ -1,5 +1,5 @@
 const {EmbedBuilder} = require('discord.js');
-const prepareEmbedMessage = require('../api'); // is this even used?
+const api = require("../api.js");
 
 module.exports = {
 	name: 'aliases',
@@ -13,7 +13,7 @@ module.exports = {
 		// 		text: 'https://github.com/Vaneer420/realest-music',
 		// 		iconURL: 'https://files.softicons.com/download/social-media-icons/flat-gradient-social-icons-by-guilherme-lima/png/512x512/Github.png'
 		// 	});
-		let embed = api.prepareEmbedMessage(); // docstring not showing up here, im scared
+		const embed = api.prepareEmbedMessage(); // docstring not showing up here, im scared
 
         embed.setTitle('Aliases List')
 			.setDescription(client.aliases.map(ele => `**m!${ele.alias}**: m!${ele.name}`).join('\n'));

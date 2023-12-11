@@ -5,6 +5,8 @@ const client = new Client({intents:[GatewayIntentBits.Guilds, GatewayIntentBits.
 client.commands = new Collection();
 client.aliases = new Collection();
 
+module.exports = client; // this is probably a bad idea
+
 var queue = {
 	connection: null,
 	songs: []

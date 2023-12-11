@@ -1,4 +1,5 @@
 const {EmbedBuilder} = require('discord.js');
+var client = require('./index.js');
 
 module.exports = {
 	/**
@@ -29,7 +30,7 @@ module.exports = {
 	 */
 	prepareEmbedMessage(text = "https://github.com/Vaneer420/realest-music") {
 		console.log("its working");
-		let embed = new EmbedBuilder
+		let embed = new EmbedBuilder()
 			.setColor('#18BCDC')
 			.setThumbnail(client.user.avatarURL({size: 512}))
 			.setFooter({
