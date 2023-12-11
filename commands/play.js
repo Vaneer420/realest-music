@@ -1,7 +1,6 @@
 const ytdl = require('ytdl-core');
 const yts = require('yt-search');
 const {createAudioPlayer, createAudioResource, joinVoiceChannel, AudioPlayerStatus} = require('@discordjs/voice');
-const {EmbedBuilder} = require('discord.js');
 const api = require("../api.js");
 
 module.exports = {
@@ -10,13 +9,7 @@ module.exports = {
 	usage: 'm!play <youtube url or search query>',
 	alias: "p",
 	async execute(message, args, client, queue) {
-		const embed = new EmbedBuilder()
-			.setColor('#18BCDC')
-			.setThumbnail(client.user.avatarURL({size: 512}))
-			.setFooter({
-				text: 'https://github.com/Vaneer420/realest-music',
-				iconURL: 'https://files.softicons.com/download/social-media-icons/flat-gradient-social-icons-by-guilherme-lima/png/512x512/Github.png'
-			});
+		const embed = api.prepareEmbedMessage(client);
 
 		const voiceChannel = message.member.voice.channel;
 		if(!voiceChannel || voiceChannel.id !== process.env.vcid) {
