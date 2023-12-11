@@ -1,3 +1,5 @@
+const {EmbedBuilder} = require('discord.js');
+
 module.exports = {
 	/**
 	 * calculates the total playing time, so you don't have to repeat the same lines of code over and over again
@@ -19,4 +21,20 @@ module.exports = {
 			return `${hrs}:${mins}:${secs}`;
 		}
 	},
+
+	/**
+	 * returns an embed.
+	 * @param {string} text customied footer text message
+	 * @returns EmbedBuilder thingy
+	 */
+	prepareEmbedMessages(text) {
+		console.log("its working");
+		let embed = new EmbedBuilder
+			.setFooter({
+				text: text,
+				iconURL: 'https://files.softicons.com/download/social-media-icons/flat-gradient-social-icons-by-guilherme-lima/png/512x512/Github.png'
+			});
+
+		return embed;
+	}
 };
