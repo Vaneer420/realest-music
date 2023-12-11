@@ -1,5 +1,4 @@
 const {EmbedBuilder} = require('discord.js');
-var client = require('./index.js');
 
 module.exports = {
 	/**
@@ -25,10 +24,11 @@ module.exports = {
 
 	/**
 	 * returns an embed.
-	 * @param {string} text customied footer text message
+	 * @param {string} client the variable thats being passed around. see index.js line 4.
+	 * @param {string} text *optional* customied footer text message
 	 * @returns EmbedBuilder thingy
 	 */
-	prepareEmbedMessage(text = "https://github.com/Vaneer420/realest-music") {
+	prepareEmbedMessage(client, text = "https://github.com/Vaneer420/realest-music") {
 		console.log("its working");
 		let embed = new EmbedBuilder()
 			.setColor('#18BCDC')
