@@ -13,6 +13,10 @@ module.exports = {
 		let mins = Math.floor((duration - (hrs * 3600)) / 60) < 10 ? "0" + Math.floor((duration - (hrs * 3600)) / 60) : Math.floor((duration - (hrs * 3600)) / 60);
 		let secs = duration - (hrs * 3600) - (mins * 60) < 10 ? "0" + (duration - (hrs * 3600) - (mins * 60)) : duration - (hrs * 3600) - (mins * 60);
 
-		return `${hrs}:${mins}:${secs}`;
+		if(hrs == "00") {
+			return `${mins}:${secs}`;
+		} else {
+			return `${hrs}:${mins}:${secs}`;
+		}
 	},
 };
