@@ -8,7 +8,6 @@ module.exports = {
 	execute(message, args, client, queue) {
 		const embed = new EmbedBuilder()
 			.setTitle(`Song Paused`)
-			.setDescription(`"${queue.songs[0].title}" has been paused.`)
 			.setColor('#18BCDC')
 			.setThumbnail(client.user.avatarURL({size: 512}))
 			.setFooter({
@@ -29,6 +28,7 @@ module.exports = {
 				.setDescription('The bot is not currently connected to the voice channel.');
 		}
 
+		if(embed.data.description == undefined) embed.setDescription(`"${queue.songs[0].title}" has been paused.`);
 		return message.channel.send({embeds: [embed]});
 	}
 }

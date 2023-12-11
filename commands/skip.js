@@ -4,10 +4,10 @@ module.exports = {
 	name: 'skip',
 	description: 'Skips whatever\'s currently playing.',
 	usage: 'm!skip',
+	alias: 's',
 	execute(message, args, client, queue) {
 		const embed = new EmbedBuilder()
 			.setTitle('Song Skipped')
-			.setDescription(`"${queue.songs[0].title}" was skipped successfully.`)
 			.setColor('#18BCDC')
 			.setThumbnail(client.user.avatarURL({size: 512}))
 			.setFooter({
@@ -27,6 +27,7 @@ module.exports = {
 				.setDescription('The bot is not connected to the voice channel.');
 		}
 
+		if(embed.data.description == undefined) embed.setDescription(`"${queue.songs[0].title}" was skipped successfully.`);
 		return message.channel.send({embeds: [embed]});
 	}
 }

@@ -3,6 +3,8 @@ const fs = require('fs');
 const {Client, Collection, GatewayIntentBits, ActivityType} = require('discord.js');
 const client = new Client({intents:[GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildVoiceStates]});
 client.commands = new Collection();
+client.aliases = new Collection();
+
 var queue = {
 	connection: null,
 	songs: []
@@ -13,6 +15,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 for(const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
+	if(command.alias != undefined) client.aliases.set(command.alias, command);
 }
 
 client.on("ready", async () => {
@@ -25,8 +28,10 @@ client.on('messageCreate', message => {
 	if(!message.content.startsWith('m!') || message.author.bot) return;
 	const args = message.content.trim().slice(2).split(' ');
 	const commandName = args.shift().toLowerCase();
-	const command = client.commands.get(commandName);
-	if(!command) return;
+	var command;
+	if(client.commands.get(commandName)) command = client.commands.get(commandName);
+	if(client.aliases.get(commandName)) command = client.aliases.get(commandName);
+	if(command == null) return;
 
 	try {
 		command.execute(message, args, client, queue);

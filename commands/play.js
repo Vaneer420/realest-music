@@ -8,6 +8,7 @@ module.exports = {
 	name: 'play',
 	description: 'Plays a specified song. Currently only supports Youtube.',
 	usage: 'm!play <youtube url or search query>',
+	alias: "p",
 	async execute(message, args, client, queue) {
 		const embed = new EmbedBuilder()
 			.setColor('#18BCDC')

@@ -4,6 +4,7 @@ module.exports = {
 	name: 'queue',
 	description: 'Shows the current queue.',
 	usage: 'm!queue',
+	alias: "q",
 	execute(message, args, client, queue) {
 		const embed = new EmbedBuilder()
 			.setColor('#18BCDC')

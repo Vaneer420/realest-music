@@ -5,6 +5,7 @@ module.exports = {
 	name: 'nowplaying',
 	description: 'Shows what\'s currently playing and details about it.',
 	usage: 'm!nowplaying',
+	alias: "np",
 	execute(message, args, client, queue) {
 		const embed = new EmbedBuilder()
 			.setTitle(`Now Playing`)
