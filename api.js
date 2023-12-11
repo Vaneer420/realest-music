@@ -1,3 +1,5 @@
+const {EmbedBuilder} = require('discord.js');
+
 module.exports = {
 	/**
 	 * calculates the total playing time, so you don't have to repeat the same lines of code over and over again
@@ -20,4 +22,29 @@ module.exports = {
 			return `${hrs}:${mins}:${secs}`;
 		}
 	},
+
+	/**
+	 * returns an embed.
+	 * @param {string} client the variable thats being passed around. see index.js line 4.
+	 * @param {string} text *optional* customied footer text message
+	 * @returns EmbedBuilder thingy
+	 */
+	prepareEmbedMessage(client, text = undefined) {
+		console.log("its working");
+
+		if(text == undefined)
+			text = "https://github.com/Vaneer420/realest-music";
+		else // append text to that
+			text = text + " | https://github.com/Vaneer420/realest-music";
+
+		let embed = new EmbedBuilder()
+			.setColor('#18BCDC')
+			.setThumbnail(client.user.avatarURL({size: 512}))
+			.setFooter({
+				text: text,
+				iconURL: 'https://files.softicons.com/download/social-media-icons/flat-gradient-social-icons-by-guilherme-lima/png/512x512/Github.png'
+			});
+
+		return embed;
+	}
 };

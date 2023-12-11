@@ -1,4 +1,4 @@
-const {EmbedBuilder} = require('discord.js');
+const api = require("../api.js");
 
 module.exports = {
 	name: 'skip',
@@ -6,14 +6,7 @@ module.exports = {
 	usage: 'm!skip',
 	alias: 's',
 	execute(message, args, client, queue) {
-		const embed = new EmbedBuilder()
-			.setTitle('Song Skipped')
-			.setColor('#18BCDC')
-			.setThumbnail(client.user.avatarURL({size: 512}))
-			.setFooter({
-				text: 'https://github.com/Vaneer420/realest-music',
-				iconURL: 'https://files.softicons.com/download/social-media-icons/flat-gradient-social-icons-by-guilherme-lima/png/512x512/Github.png'
-			});
+		const embed = api.prepareEmbedMessage(client);
 
 		if(queue.connection != null) {
 			if(message.member.voice.channelId == process.env.vcid) {
