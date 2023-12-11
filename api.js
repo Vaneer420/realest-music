@@ -28,8 +28,14 @@ module.exports = {
 	 * @param {string} text *optional* customied footer text message
 	 * @returns EmbedBuilder thingy
 	 */
-	prepareEmbedMessage(client, text = "https://github.com/Vaneer420/realest-music") {
+	prepareEmbedMessage(client, text = undefined) {
 		console.log("its working");
+
+		if(text == undefined)
+			text = "https://github.com/Vaneer420/realest-music";
+		else // append text to that
+			text = text + " | https://github.com/Vaneer420/realest-music";
+
 		let embed = new EmbedBuilder()
 			.setColor('#18BCDC')
 			.setThumbnail(client.user.avatarURL({size: 512}))
