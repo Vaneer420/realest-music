@@ -10,17 +10,17 @@ module.exports = {
 	usage: 'm!play <youtube url or search query>',
 	async execute(message, args, client, queue) {
 		const embed = new EmbedBuilder()
-		.setColor('#18BCDC')
-		.setThumbnail(client.user.avatarURL({size: 512}))
-		.setFooter({
-			text: 'https://github.com/Vaneer420/realest-music',
-			iconURL: 'https://files.softicons.com/download/social-media-icons/flat-gradient-social-icons-by-guilherme-lima/png/512x512/Github.png'
-		});
+			.setColor('#18BCDC')
+			.setThumbnail(client.user.avatarURL({size: 512}))
+			.setFooter({
+				text: 'https://github.com/Vaneer420/realest-music',
+				iconURL: 'https://files.softicons.com/download/social-media-icons/flat-gradient-social-icons-by-guilherme-lima/png/512x512/Github.png'
+			});
 
 		const voiceChannel = message.member.voice.channel;
 		if(!voiceChannel || voiceChannel.id !== process.env.vcid) {
 			embed.setTitle('Command Failed')
-			.setDescription(`Please join <#${process.env.vcid}>.`);
+				.setDescription(`Please join <#${process.env.vcid}>.`);
 			return message.channel.send({embeds:[embed]});
 		}
 
@@ -35,7 +35,7 @@ module.exports = {
 		var url = args[0];
 		if(!url) {
 			embed.setTitle('Command Failed')
-			.setDescription('Please provide a valid URL or search query.');
+				.setDescription('Please provide a valid URL or search query.');
 			return message.channel.send({ embeds: [embed] });
 		}
 
@@ -43,7 +43,7 @@ module.exports = {
 			url = await yts({query: message.content.slice(7)});
 			if(url.videos.length == 0) {
 				embed.setTitle('Command Failed')
-				.setDescription(`No search results found.`);
+					.setDescription(`No search results found.`);
 				return message.channel.send({embeds:[embed]});
 			} else {
 				url = url.videos[0].url;
@@ -60,7 +60,7 @@ module.exports = {
 		if(queue.songs.length !== 0) {
 			queue.songs.push(song);
 			embed.setTitle(`Queued: ${song.title}`)
-			.setDescription(`[${song.title}](${song.url}) has been queued and will play soon! Check the queue with \`m!queue\` to see when.`);
+				.setDescription(`[${song.title}](${song.url}) has been queued and will play soon! Check the queue with \`m!queue\` to see when.`);
 		} else {
 			try {
 				const player = createAudioPlayer();
@@ -82,7 +82,7 @@ module.exports = {
 			} catch(error) {
 				console.error(error);
 				embed.setTitle('Command Failed')
-				.setDescription('An error has occurred.');
+					.setDescription('An error has occurred.');
 			}
 		}
 
