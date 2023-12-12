@@ -15,8 +15,6 @@ module.exports = {
 		let secs = duration - (hrs * 3600) - (mins * 60) < 10 ? "0" + (duration - (hrs * 3600) - (mins * 60)) : duration - (hrs * 3600) - (mins * 60);
 
 		if(hrs == "00") {
-			if(mins == "00")
-				return `${secs}`;
 			return `${mins}:${secs}`
 		} else {
 			return `${hrs}:${mins}:${secs}`;
