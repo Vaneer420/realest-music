@@ -3,7 +3,7 @@ const {EmbedBuilder} = require('discord.js');
 module.exports = {
 	/**
 	 * calculates the total playing time, so you don't have to repeat the same lines of code over and over again
-	 * @param {string (but please send in a number)} duration usually from song.duration, but as long as its the "seconds for how long the song is" then we'd be good
+	 * @param {string} duration **please send in a number** usually from song.duration, but as long as its the "seconds for how long the song is" then we'd be good
 	 * @returns **string** that you can just pass into .setDescription. this will not include the time. blockquotes (``) aren't included
 	 */
 	calculateTotalSongLength(duration) {
@@ -24,7 +24,7 @@ module.exports = {
 	/**
 	 * returns an embed.
 	 * @param {string} client the variable thats being passed around. see index.js line 4.
-	 * @param {string} text *optional* customied footer text message
+	 * @param {string} text *optional* customized footer text message
 	 * @returns EmbedBuilder thingy
 	 */
 	prepareEmbedMessage(client, text = undefined) {
