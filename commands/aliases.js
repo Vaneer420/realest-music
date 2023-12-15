@@ -1,4 +1,3 @@
-const {EmbedBuilder} = require('discord.js');
 const api = require("../api.js");
 
 module.exports = {
