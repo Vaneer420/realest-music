@@ -20,7 +20,7 @@ for(const file of commandFiles) {
 
 client.on("ready", async () => {
 	console.log('Client user logged in: ' + client.user.tag);
-	client.user.setPresence({ activities: [{ type: ActivityType.Streaming, name: 'music in RR! :D' }] });
+	client.user.setPresence({ activities: [{ type: ActivityType.Streaming, name: process.env.activity }] });
 	client.user.setStatus('idle');
 });
 

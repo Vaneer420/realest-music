@@ -1,3 +1,4 @@
 token=BOTTOKENHERE
 vcid=IDofvoicechannelthebotshouldplaymusicin
 guildid=IDofguildthevoicechannelisin
+activity=theActivityForExample'MusicInRR!'
