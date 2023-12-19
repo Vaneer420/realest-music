@@ -28,8 +28,6 @@ module.exports = {
 	 * @returns EmbedBuilder thingy
 	 */
 	prepareEmbedMessage(client, text = undefined) {
-		console.log("its working");
-
 		if(text == undefined) text = "https://github.com/Vaneer420/realest-music";
 		else text = text + " | https://github.com/Vaneer420/realest-music";
 
