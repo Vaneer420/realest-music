@@ -7,10 +7,8 @@ module.exports = {
 	 * @returns **string** that you can just pass into .setDescription. this will not include the time. blockquotes (``) aren't included
 	 */
 	calculateTotalSongLength(duration) {
-		if(duration == undefined) {
+		if(duration == undefined)
 			console.error("duration not passed to calculateTotalSongLength. See stacktrace for details.");
-			return "duration not passed";
-		}
 
 		// TODO: implement days, but youtube doesn't allow videos over 24 hours (citation needed), so probably not an issue?
 		let hrs = Math.floor(duration / 3600) < 10 ? "0" + Math.floor(duration / 3600) : Math.floor(duration / 3600);
