@@ -10,7 +10,6 @@ module.exports = {
 	alias: "p",
 	async execute(message, args, client, queue) {
 		const embed = api.prepareEmbedMessage(client);
-
 		const voiceChannel = message.member.voice.channel;
 		if(!voiceChannel || voiceChannel.id !== process.env.vcid) {
 			embed.setTitle('Command Failed')
