@@ -4,11 +4,13 @@ The RR custom-made music bot [I (vaneer)](https://github.com/Vaneer420) made for
 
 ## Commands
 
+- `m!aliases` - Shows all the aliases that can be used.
 - `m!help` - Displays commands and allows you to view information on other commands
 - `m!nowplaying` - Shows what's currently playing and details about it.
 - `m!pause` - Pauses the current song, if playing.
 - `m!play` - Plays a specified song. Currently only supports Youtube.
 - `m!queue` - Shows the current queue.
+- `m!remove` - Removes a specified index from the queue, 0 being the current song playing and onwards.
 - `m!resume` - Resumes the current song, if paused.
 - `m!skip` - Skips whatever's currently playing.
 
