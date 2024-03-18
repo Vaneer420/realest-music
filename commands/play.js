@@ -48,7 +48,7 @@ module.exports = {
 				const player = createAudioPlayer();
 				player.on(AudioPlayerStatus.Idle, () => {
 					let looping = api.loopControl();
-					if(!looping) queue.songs.shift();
+					if(!looping.enabled) queue.songs.shift();
 					else if(looping.mode == 'queue') {
 						var song_just_played = queue.songs.shift();
 						queue.songs.push(song_just_played);
