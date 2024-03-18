@@ -8,11 +8,7 @@ module.exports = {
 	execute(message, args, client, queue) {
 		const embed = api.prepareEmbedMessage(client);
 
-		if(!queue.songs[0]) {
-	 		embed.setTitle('Queue is Empty')
-				.setDescription('There are no songs in the queue.');
-			return message.channel.send({embeds:[embed]});
-		}
+		if(!queue.songs[0]) return api.errorEmbed('There are no songs in the queue', embed, message);
 
 		embed.setTitle('Current Queue');
 		queue.songs.forEach((song, index) => {
