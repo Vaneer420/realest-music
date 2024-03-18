@@ -5,23 +5,19 @@ module.exports = {
 	description: 'Removes a specified index from the queue, 0 being the current song playing and onwards.',
 	usage: 'm!remove <#>',
 	execute(message, args, client, queue) {
-		const embed = api.prepareEmbedMessage(client);
+		var embed = api.prepareEmbedMessage(client);
 		let isItPermissibleToRemoveItemsFromThisSpecificMusicQueueInTheCurrentExecutionContextBooleanVariable = true;
 
 		if(isNaN(Number(args[0])) || !queue.songs.length) {
 			embed.setTitle('Command Error');
-			if(isNaN(Number(args[0]))) {
-				embed.setDescription('Please enter a valid index.');
-			} else {
-				embed.setDescription('The queue is currently empty.');
-			}
+			if(isNaN(Number(args[0]))) embed.setDescription('Please enter a valid index.');
+			if(!queue.songs.length) embed.setDescription('The queue is currently empty.');
 			return message.channel.send({ embeds: [embed] });
 		}
 
 		let indexToRemove = Number(args[0]) - 1;
 		if(indexToRemove < 1) {
-			embed.setTitle('Command Error')
-				.setDescription('You cannot remove indexes less than 2 from the queue!');
+			embed = api.errorEmbed('You cannot remove indexes less than 2 from the queue!', embed);
 			isItPermissibleToRemoveItemsFromThisSpecificMusicQueueInTheCurrentExecutionContextBooleanVariable = false;
 		}
 
@@ -29,10 +25,9 @@ module.exports = {
 			const removedSong = queue.songs.splice(indexToRemove, 1);
 
 			if(removedSong.length) embed.setTitle('Song Removed').setDescription(`The song "${removedSong[0].title}" has been successfully removed from the queue.`);
-			else embed.setTitle('Command Failed').setDescription('No song was removed. The provided index might be invalid.');
+			else embed = api.errorEmbed('No song was removed. The provided index might be invalid.', embed);
 		}
 
 		return message.channel.send({ embeds: [embed] });
 	}
 };
-

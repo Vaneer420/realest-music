@@ -10,20 +10,15 @@ module.exports = {
 		if(args[0] != null) {
 			const cmdupper = args[0].charAt(0).toUpperCase() + args[0].slice(1);
 			const command = client.commands.get(args[0].toLowerCase());
-			if(command == null) {
-				embed.setTitle('Command Failed')
-					.setDescription('Invalid command supplied.');
-			} else {
-				embed.setTitle(`${cmdupper} Command Details`)
-					.setDescription(`${command.description}\n\nUsage: \`${command.usage}\``);
-			}
+			if(command == null) return api.errorEmbed("Invalid command supplied.", embed, message);
+
+			embed.setTitle(`${cmdupper} Command Details`)
+				.setDescription(`${command.description}\n\nUsage: \`${command.usage}\``);
 		} else {
 			embed.setTitle('Available Commands')
 				.setDescription(client.commands.map(ele => `**${ele.name}**: ${ele.description}`).join('\n'));
 		}
 
-		message.channel.send({
-			embeds: [embed]
-		});
+		message.channel.send({embeds: [embed]});
 	}
 }

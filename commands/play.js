@@ -9,12 +9,19 @@ module.exports = {
 	usage: 'm!play <youtube url or search query>',
 	alias: "p",
 	async execute(message, args, client, queue) {
-		const embed = api.prepareEmbedMessage(client);
+		var embed = api.prepareEmbedMessage(client);
 		const voiceChannel = message.member.voice.channel;
-		if(!voiceChannel || voiceChannel.id !== process.env.vcid) {
-			embed.setTitle('Command Failed')
-				.setDescription(`Please join <#${process.env.vcid}>.`);
-			return message.channel.send({embeds:[embed]});
+		if(!voiceChannel || voiceChannel.id !== process.env.vcid) return api.errorEmbed(`Please join <#${process.env.vcid}>.`, embed, message);
+
+		var url = args[0];
+		if(!url) return api.errorEmbed('Please provide a valid URL or search query.', embed, message);
+
+		if(queue.songs.length >= 12) return api.errorEmbed('The maximum queue length is 12.', embed, message);
+
+		if(!ytdl.validateURL(url)) {
+			url = await yts({query: message.content.slice(7)});
+			if(url.videos.length == 0) return api.errorEmbed('No search results found.', embed, message);
+			else url = url.videos[0].url;
 		}
 
 		if(!queue.connection) {
@@ -23,24 +30,6 @@ module.exports = {
 				channelId: process.env.vcid,
 				guildId: process.env.guildid
 			});
-		}
-
-		var url = args[0];
-		if(!url) {
-			embed.setTitle('Command Failed')
-				.setDescription('Please provide a valid URL or search query.');
-			return message.channel.send({ embeds: [embed] });
-		}
-
-		if(!ytdl.validateURL(url)) {
-			url = await yts({query: message.content.slice(7)});
-			if(url.videos.length == 0) {
-				embed.setTitle('Command Failed')
-					.setDescription(`No search results found.`);
-				return message.channel.send({embeds:[embed]});
-			} else {
-				url = url.videos[0].url;
-			}
 		}
 
 		const streaminfo = await ytdl.getInfo(url);
@@ -58,10 +47,13 @@ module.exports = {
 			try {
 				const player = createAudioPlayer();
 				player.on(AudioPlayerStatus.Idle, () => {
-					queue.songs.shift();
-					if(queue.songs.length > 1) {
-						embed.setTitle(`not implemented`)
+					let looping = api.loopControl();
+					if(!looping) queue.songs.shift();
+					else if(looping.mode == 'queue') {
+						var song_just_played = queue.songs.shift();
+						queue.songs.push(song_just_played);
 					}
+
 					playNextSong(player, queue);
 				});
 				player.on('error', error => {
@@ -74,8 +66,7 @@ module.exports = {
 					.setDescription("\`0:00\` - " + `\`${api.calculateTotalSongLength(song.duration)}\``);
 			} catch(error) {
 				console.error(error);
-				embed.setTitle('Command Failed')
-					.setDescription('An error has occurred.');
+				embed = api.errorEmbed('An error has occured.', embed);
 			}
 		}
 
