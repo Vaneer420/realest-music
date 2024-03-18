@@ -32,7 +32,7 @@ client.on('messageCreate', message => {
 
 	var current_time = Math.floor(Date.now() / 1000);
 	const time_before = debounce_gaming[message.author.id];
-	if(time_before != null && current_time - time_before) return api.errorEmbed(`You're on command cooldown, chill out. \`${3 - (current_time - time_before)}\` seconds remaining.`, api.prepareEmbedMessage(client), message);
+	if(time_before != null && current_time - time_before < 3) return api.errorEmbed(`You're on command cooldown, chill out. \`${3 - (current_time - time_before)}\` seconds remaining.`, api.prepareEmbedMessage(client), message);
 
 	const args = message.content.trim().slice(2).split(' ');
 	const commandName = args.shift().toLowerCase();
