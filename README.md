@@ -6,6 +6,7 @@ The RR custom-made music bot [I (vaneer)](https://github.com/Vaneer420) made for
 
 - `m!aliases` - Shows all the aliases that can be used.
 - `m!help` - Displays commands and allows you to view information on other commands
+- `m!loop` - Allows you to toggle looping a specific song.
 - `m!nowplaying` - Shows what's currently playing and details about it.
 - `m!pause` - Pauses the current song, if playing.
 - `m!play` - Plays a specified song. Currently only supports Youtube.
@@ -24,4 +25,4 @@ The RR custom-made music bot [I (vaneer)](https://github.com/Vaneer420) made for
 
 ---
 
-[Realist Music](https://github.com/Vaneer420/realest-music) by @vaneer on Discord is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+[Realest Music](https://github.com/Vaneer420/realest-music) by @vaneer on Discord is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
