@@ -13,23 +13,24 @@ module.exports = {
 		if(mode != 'off' && mode != 'queue' && mode != 'song') return api.errorEmbed('Please provide a valid option!', embed, message);
 		if(mode != 'off' && looping.enabled && typeof mode != 'undefined') return api.errorEmbed('Looping is already enabled. If you meant to turn it off, try `m!loop off`!', embed, message);
 
-		if(mode == 'queue') {
-			api.loopControl('set_enabled_true');
-			api.loopControl('set_mode_queue')
-			embed.setTitle('Looping Enabled').setDescription('Looping has been enabled for the queue.');
-		}
-
-		if(mode == 'song') {
-			api.loopControl('set_enabled_true');
-			api.loopControl('set_mode_song');
-			embed.setTitle('Looping Enabled').setDescription('Looping has been enabled for this song.');
-		}
-
-		if(mode == 'off') {
-			api.loopControl('set_enabled_false');
-			embed.setTitle('Looping Disabled').setDescription('Looping has been disabled.');
-		}
+        switch(mode) {
+            case 'queue':
+                api.loopControl('set_enabled_true');
+                api.loopControl('set_mode_queue')
+                embed.setTitle('Looping Enabled').setDescription('Looping has been enabled for the queue.');
+                break;
+            case 'song':
+                api.loopControl('set_enabled_true');
+                api.loopControl('set_mode_song');
+                embed.setTitle('Looping Enabled').setDescription('Looping has been enabled for this song.');
+                break;
+            case 'off':
+                api.loopControl('set_enabled_false');
+                embed.setTitle('Looping Disabled').setDescription('Looping has been disabled.');
+                break;
+        }
 
 		return message.channel.send({embeds: [embed]});
 	}
 }
+
