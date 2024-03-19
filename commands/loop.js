@@ -10,8 +10,6 @@ module.exports = {
 		var mode = args[0];
 		const embed = api.prepareEmbedMessage(client);
 
-	    if(mode != 'off' && looping.enabled && typeof mode != 'undefined') return api.errorEmbed('Looping is already enabled. If you meant to turn it off, try `m!loop off`!', embed, message);
-
         switch(mode) {
             case 'queue':
                 api.loopControl('set_enabled_true');
