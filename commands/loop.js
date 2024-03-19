@@ -10,8 +10,7 @@ module.exports = {
 		var mode = args[0];
 		const embed = api.prepareEmbedMessage(client);
 
-		if(mode != 'off' && mode != 'queue' && mode != 'song') return api.errorEmbed('Please provide a valid option!', embed, message);
-		if(mode != 'off' && looping.enabled && typeof mode != 'undefined') return api.errorEmbed('Looping is already enabled. If you meant to turn it off, try `m!loop off`!', embed, message);
+	    if(mode != 'off' && looping.enabled && typeof mode != 'undefined') return api.errorEmbed('Looping is already enabled. If you meant to turn it off, try `m!loop off`!', embed, message);
 
         switch(mode) {
             case 'queue':
@@ -28,6 +27,8 @@ module.exports = {
                 api.loopControl('set_enabled_false');
                 embed.setTitle('Looping Disabled').setDescription('Looping has been disabled.');
                 break;
+            default:
+                return api.errorEmbed('Please provide a valid option!', embed, message);
         }
 
 		return message.channel.send({embeds: [embed]});
