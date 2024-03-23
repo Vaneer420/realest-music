@@ -47,7 +47,7 @@ module.exports = {
 		if(typeof option == "undefined") return looping;
 
 		if(option == "set_enabled_true") looping.enabled = true;
-		if(option == "set_enabled_false") {looping.enabled = false; looping.mode = undefined};
+		if(option == "set_enabled_false") {looping.enabled = false; looping.mode = undefined}
 		if(option == "set_mode_song") looping.mode = 'song';
 		if(option == "set_mode_queue") looping.mode = 'queue';
 	},
