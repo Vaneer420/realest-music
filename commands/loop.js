@@ -15,7 +15,7 @@ module.exports = {
 	description: 'Allows you to toggle looping a specific song.',
 	usage: 'm!loop <off, queue, song>',
 	alias: 'l',
-	execute(message, args, client, queue) {
+	execute(message, args, client) {
 		var looping = api.loopControl();
 		var mode = args[0];
 		const embed = api.prepareEmbedMessage(client);
