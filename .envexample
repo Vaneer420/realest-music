@@ -2,3 +2,5 @@ token=BOTTOKENHERE
 vcid=IDofvoicechannelthebotshouldplaymusicin
 guildid=IDofguildthevoicechannelisin
 activity=theActivityForExample'MusicInRR!'
+debounce_activation_threshold=timesUserMustSendAMessageToTriggerDebounce
+debounce_minimal_timeout=theMinimalTimeoutForUserInDebounce
