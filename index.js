@@ -30,9 +30,19 @@ client.on("ready", async () => {
 client.on('messageCreate', message => {
 	if(!message.content.startsWith('m!') || message.author.bot) return;
 
-	var current_time = Math.floor(Date.now() / 1000);
-	const time_before = debounce_gaming[message.author.id];
-	if(time_before != null && current_time - time_before < 3) return api.errorEmbed(`You're on command cooldown, chill out. \`${3 - (current_time - time_before)}\` seconds remaining.`, api.prepareEmbedMessage(client), message);
+    if (process.env.debounce_activation_threshold != '0') {
+        const currentTime = Math.floor(Date.now() / 1000);
+        const timeBefore = debounce_gaming[message.author.id];
+        let count = 1;
+        const diff = currentTime - timeBefore;
+        if(diff < process.env.debounce_minimal_timeout) {
+            count = debounce_gaming[`${message.author.id}_count`] + 1;
+            if(count < process.env.debounce_activation_threshold)
+                return api.errorEmbed(`You're on command cooldown, chill out. \`${process.env.debounce_minimal_timeout - (diff)}\` seconds remaining.`, api.prepareEmbedMessage(client), message);
+        }
+        debounce_gaming[message.author.id] = currentTime;
+        debounce_gaming[`${message.author.id}_count`] = count;
+    }
 
 	const args = message.content.trim().slice(2).split(' ');
 	const commandName = args.shift().toLowerCase();
@@ -47,8 +57,6 @@ client.on('messageCreate', message => {
 		console.error(error);
 		message.reply(error);
 	};
-
-	debounce_gaming[message.author.id] = current_time;
 });
 
 client.on('error', error => {
