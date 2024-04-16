@@ -30,13 +30,12 @@ client.on("ready", async () => {
 client.on('messageCreate', message => {
 	if(!message.content.startsWith('m!') || message.author.bot) return;
 
-    if(process.env.debounce_activation_threshold != '0') {
-        let debounceStruct = debouncing.checkDebounce(message.author.id);
-        console.log(debounceStruct);
-        if(debounceStruct.shouldRateLimit) {
-            return api.errorEmbed(`You're on command cooldown, chill out. \`${process.env.debounce_minimal_timeout - (debounceStruct.diff)}\` seconds remaining.`, api.prepareEmbedMessage(client), message);
-        }
-    }
+	if(process.env.debounce_activation_threshold != '0') {
+		let debounceStruct = debouncing.checkDebounce(message.author.id);
+		if(debounceStruct.shouldRateLimit) {
+			return api.errorEmbed(`You're on command cooldown, chill out. \`${process.env.debounce_minimal_timeout - (debounceStruct.diff)}\` seconds remaining.`, api.prepareEmbedMessage(client), message);
+		}
+	}
 
 	const args = message.content.trim().slice(2).split(' ');
 	const commandName = args.shift().toLowerCase();
