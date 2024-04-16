@@ -13,7 +13,7 @@ var queue = {
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const api = require('./api.js');
-const debounce_gaming = {};
+const debouncing = require('./debouncing.js');
 
 for(const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -30,9 +30,12 @@ client.on("ready", async () => {
 client.on('messageCreate', message => {
 	if(!message.content.startsWith('m!') || message.author.bot) return;
 
-	var current_time = Math.floor(Date.now() / 1000);
-	const time_before = debounce_gaming[message.author.id];
-	if(time_before != null && current_time - time_before < 3) return api.errorEmbed(`You're on command cooldown, chill out. \`${3 - (current_time - time_before)}\` seconds remaining.`, api.prepareEmbedMessage(client), message);
+	if(process.env.debounce_activation_threshold != '0') {
+		let debounceStruct = debouncing.checkDebounce(message.author.id);
+		if(debounceStruct.shouldRateLimit) {
+			return api.errorEmbed(`You're on command cooldown, chill out. \`${process.env.debounce_minimal_timeout - (debounceStruct.diff)}\` seconds remaining.`, api.prepareEmbedMessage(client), message);
+		}
+	}
 
 	const args = message.content.trim().slice(2).split(' ');
 	const commandName = args.shift().toLowerCase();
@@ -47,8 +50,6 @@ client.on('messageCreate', message => {
 		console.error(error);
 		message.reply(error);
 	};
-
-	debounce_gaming[message.author.id] = current_time;
 });
 
 client.on('error', error => {
