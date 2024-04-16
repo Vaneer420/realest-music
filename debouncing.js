@@ -1,4 +1,4 @@
-const debounce_gaming = {};
+const debounceGaming = {};
 
 module.exports = {
     checkDebounce(authorId) {
@@ -8,19 +8,19 @@ module.exports = {
         };
 
         const currentTime = Math.floor(Date.now() / 1000);
-        const timeBefore = debounce_gaming[authorId];
+        const timeBefore = debounceGaming[authorId];
         let count = 1;
         const diff = currentTime - timeBefore;
         if(diff < process.env.debounce_minimal_timeout) {
-            count = debounce_gaming[`${authorId}_count`] + 1;
+            count = debounceGaming[`${authorId}_count`] + 1;
             if(count < process.env.debounce_activation_threshold) {
                 returnValue.diff = diff;
                 returnValue.shouldRateLimit = true;
                 return returnValue;
             }
         }
-        debounce_gaming[authorId] = currentTime;
-        debounce_gaming[`${authorId}_count`] = count;
+        debounceGaming[authorId] = currentTime;
+        debounceGaming[`${authorId}_count`] = count;
         return returnValue;
     }
 }
