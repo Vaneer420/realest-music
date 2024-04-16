@@ -1,4 +1,4 @@
-token=BOTTOKENHERE
-vcid=IDofvoicechannelthebotshouldplaymusicin
-guildid=IDofguildthevoicechannelisin
-activity=theActivityForExample'MusicInRR!'
+token=BOT TOKEN HERE
+vcid=ID of the voice channel the bot should play in
+guildid=ID of the guild (server) the voice channel (above) is in.
+activity=the activity, for example "music in RR" (you may omit the quotes)
