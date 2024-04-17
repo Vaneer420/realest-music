@@ -1,6 +1,6 @@
-token=BOTTOKENHERE
-vcid=IDofvoicechannelthebotshouldplaymusicin
-guildid=IDofguildthevoicechannelisin
-activity=theActivityForExample'MusicInRR!'
-debounce_activation_threshold=timesUserMustSendAMessageToTriggerDebounce
-debounce_minimal_timeout=theMinimalTimeoutForUserInDebounce
+token=BOT TOKEN HERE
+vcid=ID of the voice channel the bot should play in
+guildid=ID of the guild (server) the voice channel (above) is in.
+activity=the activity, for example "music in RR" (you may omit the quotes)
+debounce_activation_threshold=messages a user must send to be debounced. set to 0 to disable.
+debounce_minimal_timeout=the minimal timeout (as a positive integer) the user should receive if they exceed the debounce_activation_threshold
