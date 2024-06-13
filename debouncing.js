@@ -1,10 +1,7 @@
 const debounceGaming = {};
-var testing = 1;
 
 module.exports = {
     checkDebounce(authorId) {
-        testing += 1;
-
         let returnValue = {
             shouldRateLimit: false,
             diff: 0,
