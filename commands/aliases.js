@@ -8,7 +8,7 @@ module.exports = {
 	execute(message, args, client) {
 		const embed = api.prepareEmbedMessage(client);
 
-        embed.setTitle('Aliases List')
+		embed.setTitle('Aliases List')
 			.setDescription(client.aliases.map(ele => `**m!${ele.alias}**: m!${ele.name}`).join('\n'));
 
 		message.channel.send({embeds:[embed]});
