@@ -1,5 +1,6 @@
-const {EmbedBuilder, Message} = require('discord.js');
-var looping = {enabled: false, mode: undefined};
+const {EmbedBuilder, Message} = require('discord.js'); // used to require specific classes to the discord.js module
+var looping = {enabled: false, mode: undefined}; // used in loopControl()
+const debounceGaming = {}; // used in checkDebounce()
 
 module.exports = {
 	/**
@@ -64,5 +65,32 @@ module.exports = {
 
 		if(typeof message != 'undefined') message.channel.send({embeds: [embed]});
 		return embed;
-	}
+	},
+
+	/**
+	 * checks debounce of user, assumes that when called they've sent a message
+	 * @param {string} authorId id of user
+	 * @returns object containing information on whether user should be rate limited and how many seconds are between their last command and command before that
+	 */
+	checkDebounce(authorId) {
+        let returnValue = {
+            shouldRateLimit: false,
+            diff: 0,
+        };
+
+        const currentTime = Math.floor(Date.now() / 1000);
+        const timeBefore = debounceGaming[authorId];
+        let count = debounceGaming[`${authorId}_count`] || 0;
+        const diff = currentTime - timeBefore;
+        if(diff < process.env.debounce_minimal_timeout) {
+            if(count > process.env.debounce_activation_threshold) {
+                returnValue.diff = diff;
+                returnValue.shouldRateLimit = true;
+                return returnValue;
+            }
+        }
+        debounceGaming[authorId] = currentTime;
+        debounceGaming[`${authorId}_count`] = count + 1;
+        return returnValue;
+    }
 };
