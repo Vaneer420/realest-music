@@ -4,6 +4,7 @@ module.exports = {
 	name: 'remove',
 	description: 'Removes a specified index from the queue, 0 being the current song playing and onwards.',
 	usage: 'm!remove <#>',
+	category: 'QUEUE MANAGEMENT',
 	execute(message, args, client, queue) {
 		var embed = api.prepareEmbedMessage(client);
 		let isItPermissibleToRemoveItemsFromThisSpecificMusicQueueInTheCurrentExecutionContextBooleanVariable = true;

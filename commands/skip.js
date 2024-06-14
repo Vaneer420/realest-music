@@ -5,6 +5,7 @@ module.exports = {
 	description: 'Skips whatever\'s currently playing.',
 	usage: 'm!skip',
 	alias: 's',
+	category: 'PLAYBACK CONTROLS',
 	execute(message, args, client, queue) {
 		var embed = api.prepareEmbedMessage(client);
 

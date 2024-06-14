@@ -4,6 +4,7 @@ module.exports = {
 	name: 'aliases',
 	description: 'Shows all the aliases that can be used.',
 	usage: 'm!aliases',
+	category: 'GENERAL',
 	execute(message, args, client) {
 		const embed = api.prepareEmbedMessage(client);
 

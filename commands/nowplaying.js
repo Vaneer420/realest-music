@@ -5,6 +5,7 @@ module.exports = {
 	description: 'Shows what\'s currently playing and details about it.',
 	usage: 'm!nowplaying',
 	alias: "np",
+	category: 'PLAYBACK CONTROLS',
 	execute(message, args, client, queue) {
 		var embed = api.prepareEmbedMessage(client);
 

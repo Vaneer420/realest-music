@@ -8,6 +8,7 @@ module.exports = {
 	description: 'Plays a specified song. Currently only supports Youtube.',
 	usage: 'm!play <youtube url or search query>',
 	alias: "p",
+	category: 'PLAYBACK CONTROLS',
 	async execute(message, args, client, queue) {
 		var embed = api.prepareEmbedMessage(client);
 		const voiceChannel = message.member.voice.channel;
