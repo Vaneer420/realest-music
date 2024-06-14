@@ -1,7 +1,6 @@
 require('dotenv').config();
 const fs = require('fs');
-const {Client, Collection, GatewayIntentBits, ActivityType, EmbedBuilder} = require('discord.js');
-const { time } = require('console');
+const {Client, Collection, GatewayIntentBits, ActivityType} = require('discord.js');
 const client = new Client({intents:[GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildVoiceStates]});
 client.commands = new Collection();
 client.aliases = new Collection();
@@ -13,7 +12,6 @@ var queue = {
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const api = require('./api.js');
-const debouncing = require('./debouncing.js');
 
 for(const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -29,20 +27,20 @@ client.on("ready", async () => {
 
 client.on('messageCreate', message => {
 	if(!message.content.startsWith('m!') || message.author.bot) return;
-
-	if(process.env.debounce_activation_threshold != '0') {
-		let debounceStruct = debouncing.checkDebounce(message.author.id);
-		if(debounceStruct.shouldRateLimit) {
-			return api.errorEmbed(`You're on command cooldown, chill out. \`${process.env.debounce_minimal_timeout - (debounceStruct.diff)}\` seconds remaining.`, api.prepareEmbedMessage(client), message);
-		}
-	}
-
+	
 	const args = message.content.trim().slice(2).split(' ');
 	const commandName = args.shift().toLowerCase();
 	var command;
 	if(client.commands.get(commandName)) command = client.commands.get(commandName);
 	if(client.aliases.get(commandName)) command = client.aliases.get(commandName);
 	if(command == null) return;
+
+	if(process.env.debounce_activation_threshold != '0') {
+		let debounceStruct = api.checkDebounce(message.author.id);
+		if(debounceStruct.shouldRateLimit) {
+			return api.errorEmbed(`You're on command cooldown, chill out. \`${process.env.debounce_minimal_timeout - (debounceStruct.diff)}\` seconds remaining.`, api.prepareEmbedMessage(client), message);
+		}
+	}
 
 	try {
 		command.execute(message, args, client, queue);
