@@ -1,6 +1,6 @@
 const ytdl = require('ytdl-core');
 const yts = require('yt-search');
-const {createAudioPlayer, createAudioResource, joinVoiceChannel, AudioPlayerStatus} = require('@discordjs/voice');
+const {createAudioPlayer, createAudioResource, joinVoiceChannel, AudioPlayerStatus, NoSubscriberBehavior} = require('@discordjs/voice');
 const api = require("../api.js");
 
 module.exports = {
@@ -45,7 +45,7 @@ module.exports = {
 				.setDescription(`[${song.title}](${song.url}) has been queued and will play soon! Check the queue with \`m!queue\` to see when.`);
 		} else {
 			try {
-				const player = createAudioPlayer();
+				const player = createAudioPlayer({behaviors: {noSubscriber: NoSubscriberBehavior.Stop}});
 				player.on(AudioPlayerStatus.Idle, () => {
 					let looping = api.loopControl();
 					if(!looping.enabled) queue.songs.shift();
