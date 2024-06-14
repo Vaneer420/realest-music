@@ -30,6 +30,12 @@ module.exports = {
 				channelId: process.env.vcid,
 				guildId: process.env.guildid
 			});
+
+			queue.connection.on('stateChange', (a, state) => { // im fairly certain this and the next 4 lines is something that can be done in one but im too lazy to look for that. open a pr if you have a better way to handle this
+				if(state.status == 'disconnected') {
+					queue.connection.rejoin(); // if you gave the bot bad permissions, this is your fault. im not explaining anything more
+				}
+			});
 		}
 
 		const streaminfo = await ytdl.getInfo(url);
@@ -45,7 +51,7 @@ module.exports = {
 				.setDescription(`[${song.title}](${song.url}) has been queued and will play soon! Check the queue with \`m!queue\` to see when.`);
 		} else {
 			try {
-				const player = createAudioPlayer({behaviors: {noSubscriber: NoSubscriberBehavior.Stop}});
+				const player = createAudioPlayer({behaviors: {noSubscriber: NoSubscriberBehavior.Pause}});
 				player.on(AudioPlayerStatus.Idle, () => {
 					let looping = api.loopControl();
 					if(!looping.enabled) queue.songs.shift();
