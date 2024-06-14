@@ -5,6 +5,7 @@ module.exports = {
 	name: 'pause',
 	description: 'Pauses the current song, if playing.',
 	usage: 'm!pause',
+	category: 'PLAYBACK CONTROLS',
 	execute(message, args, client, queue) {
 		var embed = api.prepareEmbedMessage(client);
 

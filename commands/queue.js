@@ -5,6 +5,7 @@ module.exports = {
 	description: 'Shows the current queue.',
 	usage: 'm!queue',
 	alias: "q",
+	category: 'QUEUE MANAGEMENT',
 	execute(message, args, client, queue) {
 		const embed = api.prepareEmbedMessage(client);
 

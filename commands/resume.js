@@ -5,6 +5,7 @@ module.exports = {
 	name: 'resume',
 	description: 'Resumes the current song, if paused.',
 	usage: 'm!resume',
+	category: 'PLAYBACK CONTROLS',
 	execute(message, args, client, queue) {
 		var embed = api.prepareEmbedMessage(client);
 
