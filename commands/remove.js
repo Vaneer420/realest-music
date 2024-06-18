@@ -1,4 +1,4 @@
-const api = require("../api.js");
+const {prepareEmbedMessage, errorEmbed} = require("../api.js");
 
 module.exports = {
 	name: 'remove',
@@ -6,7 +6,7 @@ module.exports = {
 	usage: 'm!remove <#>',
 	category: 'QUEUE MANAGEMENT',
 	execute(message, args, client, queue) {
-		var embed = api.prepareEmbedMessage(client);
+		var embed = prepareEmbedMessage(client);
 		let isItPermissibleToRemoveItemsFromThisSpecificMusicQueueInTheCurrentExecutionContextBooleanVariable = true;
 
 		if(isNaN(Number(args[0])) || !queue.songs.length) {
@@ -18,7 +18,7 @@ module.exports = {
 
 		let indexToRemove = Number(args[0]) - 1;
 		if(indexToRemove < 1) {
-			embed = api.errorEmbed('You cannot remove indexes less than 2 from the queue!', embed);
+			embed = errorEmbed('You cannot remove indexes less than 2 from the queue!', embed);
 			isItPermissibleToRemoveItemsFromThisSpecificMusicQueueInTheCurrentExecutionContextBooleanVariable = false;
 		}
 
@@ -26,7 +26,7 @@ module.exports = {
 			const removedSong = queue.songs.splice(indexToRemove, 1);
 
 			if(removedSong.length) embed.setTitle('Song Removed').setDescription(`The song "${removedSong[0].title}" has been successfully removed from the queue.`);
-			else embed = api.errorEmbed('No song was removed. The provided index might be invalid.', embed);
+			else embed = errorEmbed('No song was removed. The provided index might be invalid.', embed);
 		}
 
 		return message.channel.send({ embeds: [embed] });

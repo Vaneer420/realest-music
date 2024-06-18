@@ -1,4 +1,4 @@
-const api = require("../api.js");
+const {prepareEmbedMessage, errorEmbed, calculateTotalSongLength} = require("../api.js");
 
 module.exports = {
 	name: 'nowplaying',
@@ -7,13 +7,13 @@ module.exports = {
 	alias: "np",
 	category: 'PLAYBACK CONTROLS',
 	execute(message, args, client, queue) {
-		var embed = api.prepareEmbedMessage(client);
+		var embed = prepareEmbedMessage(client);
 
 		if(queue.connection != null) {
 			const player = queue.connection.state.subscription.player;
-			embed.setDescription(`[${queue.songs[0].title}](${queue.songs[0].url})\n\`${`${String(Math.floor(player.state.playbackDuration / 1000 / 60)).padStart(2, '0')}:${String(Math.floor(player.state.playbackDuration / 1000 % 60)).padStart(2, '0')}`} - ${String(api.calculateTotalSongLength(queue.songs[0].duration))}\``);
+			embed.setDescription(`[${queue.songs[0].title}](${queue.songs[0].url})\n\`${`${String(Math.floor(player.state.playbackDuration / 1000 / 60)).padStart(2, '0')}:${String(Math.floor(player.state.playbackDuration / 1000 % 60)).padStart(2, '0')}`} - ${String(calculateTotalSongLength(queue.songs[0].duration))}\``);
 		} else {
-			embed = api.errorEmbed('The bot is not currently playing anything.', embed);
+			embed = errorEmbed('The bot is not currently playing anything.', embed);
 		}
 
 		return message.channel.send({embeds: [embed]});

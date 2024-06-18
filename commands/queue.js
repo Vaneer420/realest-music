@@ -1,4 +1,4 @@
-const api = require("../api.js");
+const {prepareEmbedMessage, errorEmbed} = require("../api.js");
 
 module.exports = {
 	name: 'queue',
@@ -7,9 +7,9 @@ module.exports = {
 	alias: "q",
 	category: 'QUEUE MANAGEMENT',
 	execute(message, args, client, queue) {
-		const embed = api.prepareEmbedMessage(client);
+		const embed = prepareEmbedMessage(client);
 
-		if(!queue.songs[0]) return api.errorEmbed('There are no songs in the queue', embed, message);
+		if(!queue.songs[0]) return errorEmbed('There are no songs in the queue', embed, message);
 
 		embed.setTitle('Current Queue');
 		queue.songs.forEach((song, index) => {

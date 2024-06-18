@@ -1,7 +1,7 @@
 const ytdl = require('ytdl-core');
 const yts = require('yt-search');
 const {createAudioPlayer, createAudioResource, joinVoiceChannel, AudioPlayerStatus, NoSubscriberBehavior} = require('@discordjs/voice');
-const api = require("../api.js");
+const {errorEmbed, loopControl, prepareEmbedMessage, calculateTotalSongLength} = require("../api.js");
 
 module.exports = {
 	name: 'play',
@@ -10,18 +10,18 @@ module.exports = {
 	alias: "p",
 	category: 'PLAYBACK CONTROLS',
 	async execute(message, args, client, queue) {
-		var embed = api.prepareEmbedMessage(client);
+		var embed = prepareEmbedMessage(client);
 		const voiceChannel = message.member.voice.channel;
-		if(!voiceChannel || voiceChannel.id !== process.env.vcid) return api.errorEmbed(`Please join <#${process.env.vcid}>.`, embed, message);
+		if(!voiceChannel || voiceChannel.id !== process.env.vcid) return errorEmbed(`Please join <#${process.env.vcid}>.`, embed, message);
 
 		var url = args[0];
-		if(!url) return api.errorEmbed('Please provide a valid URL or search query.', embed, message);
+		if(!url) return errorEmbed('Please provide a valid URL or search query.', embed, message);
 
-		if(queue.songs.length >= 12) return api.errorEmbed('The maximum queue length is 12.', embed, message);
+		if(queue.songs.length >= 12) return errorEmbed('The maximum queue length is 12.', embed, message);
 
 		if(!ytdl.validateURL(url)) {
 			url = await yts({query: message.content.slice(7)});
-			if(url.videos.length == 0) return api.errorEmbed('No search results found.', embed, message);
+			if(url.videos.length == 0) return errorEmbed('No search results found.', embed, message);
 			else url = url.videos[0].url;
 		}
 
@@ -54,7 +54,7 @@ module.exports = {
 			try {
 				const player = createAudioPlayer({behaviors: {noSubscriber: NoSubscriberBehavior.Pause}});
 				player.on(AudioPlayerStatus.Idle, () => {
-					let looping = api.loopControl();
+					let looping = loopControl();
 					if(!looping.enabled) queue.songs.shift();
 					else if(looping.mode == 'queue') {
 						var song_just_played = queue.songs.shift();
@@ -70,10 +70,10 @@ module.exports = {
 				playNextSong(player, queue);
 
 				embed.setTitle(`Now Playing: ${song.title}`)
-					.setDescription("\`0:00\` - " + `\`${api.calculateTotalSongLength(song.duration)}\``);
+					.setDescription("\`0:00\` - " + `\`${calculateTotalSongLength(song.duration)}\``);
 			} catch(error) {
 				console.error(error);
-				embed = api.errorEmbed('An error has occured.', embed);
+				embed = errorEmbed('An error has occured.', embed);
 			}
 		}
 
