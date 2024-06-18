@@ -3,6 +3,8 @@ var looping = {enabled: false, mode: undefined}; // used in loopControl()
 const debounceGaming = {}; // used in checkDebounce()
 
 module.exports = {
+	// FUNCTIONS //
+
 	/**
 	 * calculates the total playing time, so you don't have to repeat the same lines of code over and over again
 	 * @param {string} duration **please send in a number** usually from song.duration, but as long as its the "seconds for how long the song is" then we'd be good
@@ -11,7 +13,6 @@ module.exports = {
 	calculateTotalSongLength(duration) {
 		if(duration == undefined) console.error("duration not passed to calculateTotalSongLength. See stacktrace for details.");
 
-		// TODO: implement days, but youtube doesn't allow videos over 24 hours (citation needed), so probably not an issue?
 		let hrs = Math.floor(duration / 3600) < 10 ? "0" + Math.floor(duration / 3600) : Math.floor(duration / 3600);
 		let mins = Math.floor((duration - (hrs * 3600)) / 60) < 10 ? "0" + Math.floor((duration - (hrs * 3600)) / 60) : Math.floor((duration - (hrs * 3600)) / 60);
 		let secs = duration - (hrs * 3600) - (mins * 60) < 10 ? "0" + (duration - (hrs * 3600) - (mins * 60)) : duration - (hrs * 3600) - (mins * 60);
@@ -44,13 +45,13 @@ module.exports = {
 	 * @param {string} option can be "set_false" or "set_true", or leave blank to return looping status without touching it
 	 * @returns **boolean** - loop status
 	 */
-	loopControl(option = undefined) {
+	loopControl(option) {
 		if(typeof option == "undefined") return looping;
 
-		if(option == "set_enabled_true") looping.enabled = true;
-		if(option == "set_enabled_false") {looping.enabled = false; looping.mode = undefined}
-		if(option == "set_mode_song") looping.mode = 'song';
-		if(option == "set_mode_queue") looping.mode = 'queue';
+		if(option == this.Enums.LoopStatus.Enabled) looping.enabled = true;
+		if(option == this.Enums.LoopStatus.Disabled) {looping.enabled = false; looping.mode = undefined}
+		if(option == this.Enums.LoopMode.Song) looping.mode = 'song';
+		if(option == this.Enums.LoopMode.Queue) looping.mode = 'queue';
 	},
 
 	/**
@@ -59,7 +60,7 @@ module.exports = {
 	 * @param {EmbedBuilder} embed original embed prepared for command output
 	 * @param {Message} [message] the message parameter from the module parameter list, only include if you want error message sent after function call
 	 */
-	errorEmbed(error, embed, message=undefined) {
+	errorEmbed(error, embed, message) {
 		embed.setTitle('Command Failed')
 			.setDescription(error);
 
@@ -92,5 +93,18 @@ module.exports = {
 		debounceGaming[authorId] = currentTime;
 		debounceGaming[`${authorId}_count`] = count + 1;
 		return returnValue;
+	},
+
+	// ENUMS //
+	Enums: {
+		LoopStatus: {
+			Enabled: "set_enabled_true",
+			Disabled: "set_enabled_false",
+		},
+	
+		LoopMode: {
+			Queue: "set_mode_queue",
+			Song: "set_mode_song",
+		}
 	}
 };
