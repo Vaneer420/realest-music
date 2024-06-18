@@ -1,4 +1,4 @@
-const api = require("../api.js");
+const {prepareEmbedMessage} = require("../api.js");
 
 module.exports = {
 	name: 'aliases',
@@ -6,7 +6,7 @@ module.exports = {
 	usage: 'm!aliases',
 	category: 'GENERAL',
 	execute(message, args, client) {
-		const embed = api.prepareEmbedMessage(client);
+		const embed = prepareEmbedMessage(client);
 
 		embed.setTitle('Aliases List')
 			.setDescription(client.aliases.map(ele => `**m!${ele.alias}**: m!${ele.name}`).join('\n'));
