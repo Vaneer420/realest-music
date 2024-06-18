@@ -1,14 +1,7 @@
-const api = require('../api.js');
+const {loopControl, prepareEmbedMessage, errorEmbed, Enums} = require('../api.js');
 
-const LoopStatus = {
-	Enabled: "set_enabled_true",
-	Disabled: "set_enabled_false",
-}
-
-const LoopMode = {
-	Queue: "set_mode_queue",
-	Song: "set_mode_song",
-}
+const LoopStatus = Enums.LoopStatus;
+const LoopMode = Enums.LoopMode;
 
 module.exports = {
 	name: 'loop',
@@ -17,27 +10,27 @@ module.exports = {
 	alias: 'l',
 	category: 'PLAYBACK CONTROLS',
 	execute(message, args, client) {
-		var looping = api.loopControl();
+		var looping = loopControl();
 		var mode = args[0];
-		const embed = api.prepareEmbedMessage(client);
+		const embed = prepareEmbedMessage(client);
 
 		switch(mode) {
 			case 'queue':
-				api.loopControl(LoopStatus.Enabled);
-				api.loopControl(LoopMode.Queue);
+				loopControl(LoopStatus.Enabled);
+				loopControl(LoopMode.Queue);
 				embed.setTitle('Looping Enabled').setDescription('Looping has been enabled for the queue.');
 				break;
 			case 'song':
-				api.loopControl(LoopStatus.Enabled);
-				api.loopControl(LoopMode.Song);
+				loopControl(LoopStatus.Enabled);
+				loopControl(LoopMode.Song);
 				embed.setTitle('Looping Enabled').setDescription('Looping has been enabled for this song.');
 				break;
 			case 'off':
-				api.loopControl(LoopStatus.Disabled);
+				loopControl(LoopStatus.Disabled);
 				embed.setTitle('Looping Disabled').setDescription('Looping has been disabled.');
 				break;
 			default:
-				return api.errorEmbed('Please provide a valid option!', embed, message);
+				return errorEmbed('Please provide a valid option!', embed, message);
 		}
 
 		return message.channel.send({embeds: [embed]});
