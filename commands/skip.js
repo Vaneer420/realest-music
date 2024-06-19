@@ -1,4 +1,5 @@
-const {prepareEmbedMessage, errorEmbed} = require("../api.js");
+const {prepareEmbedMessage, errorEmbed, skipControl} = require("../api.js");
+var alreadyVoted = [];
 
 module.exports = {
 	name: 'skip',
@@ -9,12 +10,15 @@ module.exports = {
 	execute(message, args, client, queue) {
 		var embed = prepareEmbedMessage(client);
 
-		if(queue.connection != null) {
-			if(message.member.voice.channelId == process.env.vcid) queue.connection.state.subscription.player.stop();
-			else embed = errorEmbed(`Please join <#${process.env.vcid}>.`, embed);
-		} else embed = errorEmbed('The bot is not connected to the voice channel.', embed);
+		if(!queue.connection) return errorEmbed('The bot is not currently playing anything!', embed, message);
+		if(message.member.voice.channelId != process.env.vcid) return errorEmbed('You must join the voice channel to vote for a skip!', embed, message);
+		if(!alreadyVoted[message.author.id]) alreadyVoted.push(message.author.id);
+		else return errorEmbed('You have already voted to skip!', embed, message);
 
-		if(embed.data.description == undefined) embed.setDescription(`"${queue.songs[0].title}" was skipped successfully.`);
+		const response = skipControl(message.guild.members.me.voice.channel.members.size, queue);
+		if(response[0] == 'voted') embed.setTitle('Vote Submitted').setDescription(`You have voted to skip! \`${response[1]}/${response[2]}\``);
+		if(response[0] == 'skipped') embed.setTitle('Skipped Successfully').setDescription('The current song has been successfully skipped!');
+		
 		return message.channel.send({embeds: [embed]});
 	}
 }
