@@ -9,10 +9,14 @@ module.exports = {
 	usage: 'm!loop <off, queue, song>',
 	alias: 'l',
 	category: 'PLAYBACK CONTROLS',
-	execute(message, args, client) {
+	execute(message, args, client, queue) {
+		const embed = prepareEmbedMessage(client);
+		
+		if(!queue.connection) return errorEmbed(`The bot is not currently playing anything!`, embed, message);
+		if(message.member.voice.channelId != process.env.vcid) return errorEmbed(`Please join <#${process.env.vcid}>.`, embed, message);
+
 		var looping = loopControl();
 		var mode = args[0];
-		const embed = prepareEmbedMessage(client);
 
 		switch(mode) {
 			case 'queue':
@@ -36,4 +40,3 @@ module.exports = {
 		return message.channel.send({embeds: [embed]});
 	}
 }
-
