@@ -1,6 +1,8 @@
 const {EmbedBuilder, Message} = require('discord.js'); // used to require specific classes to the discord.js module
 var looping = {enabled: false, mode: undefined}; // used in loopControl()
 const debounceGaming = {}; // used in checkDebounce()
+var skipVoteCount = 0; // used in skipControl()
+
 // ENUMS (defined here to allow them to be used in the api.js file, don't change unless you've thoroughly tested your change)
 const LoopStatus = {
 	Enabled: "set_enabled_true",
@@ -103,6 +105,19 @@ module.exports = {
 		debounceGaming[authorId] = currentTime;
 		debounceGaming[`${authorId}_count`] = count + 1;
 		return returnValue;
+	},
+
+	skipControl(membercount, queue, option) {
+		if(typeof option == 'undefined') skipVoteCount += 1;
+		
+		if(option == 'clear') skipVoteCount = 0;
+		if(option == 'force') skipVoteCount = process.env.skip_percentage_number; // this looks weird but it works with the maximum member limit of a vc. you gotta trust.
+		
+		const requiredvotes = Math.ceil((membercount - 1) * (process.env.skip_percentage_number / 100));
+		if(skipVoteCount >= requiredvotes) {
+			queue.connection.state.subscription.player.stop();
+			return ['skipped', skipVoteCount, requiredvotes];
+		} else return ['voted', skipVoteCount, 	requiredvotes];
 	},
 
 	// ENUMS //

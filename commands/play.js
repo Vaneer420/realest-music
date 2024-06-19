@@ -1,7 +1,7 @@
 const ytdl = require('ytdl-core');
 const yts = require('yt-search');
 const {createAudioPlayer, createAudioResource, joinVoiceChannel, AudioPlayerStatus, NoSubscriberBehavior} = require('@discordjs/voice');
-const {errorEmbed, loopControl, prepareEmbedMessage, calculateTotalSongLength} = require("../api.js");
+const {errorEmbed, loopControl, prepareEmbedMessage, calculateTotalSongLength, skipControl} = require("../api.js");
 
 module.exports = {
 	name: 'play',
@@ -67,7 +67,7 @@ module.exports = {
 					console.log(error);
 				});
 				queue.songs.push(song);
-				playNextSong(player, queue);
+				playNextSong(player, queue, message.guild);
 
 				embed.setTitle(`Now Playing: ${song.title}`)
 					.setDescription("\`0:00\` - " + `\`${calculateTotalSongLength(song.duration)}\``);
@@ -81,13 +81,14 @@ module.exports = {
 	},
 };
 
-async function playNextSong(player, queue) {
+async function playNextSong(player, queue, guild) {
 	if(queue.songs.length > 0) {
 		const song = queue.songs[0];
 		const stream = ytdl(song.url, {filter: 'audioonly'});
 		const resource = createAudioResource(stream);
 		player.play(resource);
 		queue.connection.subscribe(player);
+		skipControl(guild.members.me.voice.channel.members.size, queue, 'clear');
 	} else {
 		queue.connection.destroy();
 		queue['connection'] = null;
