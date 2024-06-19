@@ -61,7 +61,7 @@ module.exports = {
 						queue.songs.push(song_just_played);
 					}
 
-					playNextSong(player, queue);
+					playNextSong(player, queue, message.guild);
 				});
 				player.on('error', error => {
 					console.log(error);
