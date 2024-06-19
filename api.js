@@ -1,6 +1,16 @@
 const {EmbedBuilder, Message} = require('discord.js'); // used to require specific classes to the discord.js module
 var looping = {enabled: false, mode: undefined}; // used in loopControl()
 const debounceGaming = {}; // used in checkDebounce()
+// ENUMS (defined here to allow them to be used in the api.js file, don't change unless you've thoroughly tested your change)
+const LoopStatus = {
+	Enabled: "set_enabled_true",
+	Disabled: "set_enabled_false",
+};
+
+const LoopMode = {
+	Queue: "set_mode_queue",
+	Song: "set_mode_song",
+};
 
 module.exports = {
 	// FUNCTIONS //
@@ -48,10 +58,10 @@ module.exports = {
 	loopControl(option) {
 		if(typeof option == "undefined") return looping;
 
-		if(option == this.Enums.LoopStatus.Enabled) looping.enabled = true;
-		if(option == this.Enums.LoopStatus.Disabled) {looping.enabled = false; looping.mode = undefined}
-		if(option == this.Enums.LoopMode.Song) looping.mode = 'song';
-		if(option == this.Enums.LoopMode.Queue) looping.mode = 'queue';
+		if(LoopStatus.Enabled == option) looping.enabled = true;
+		if(LoopStatus.Disabled == option) {looping.enabled = false; looping.mode = undefined}
+		if(LoopMode.Song == option) looping.mode = 'song';
+		if(LoopMode.Queue == option) looping.mode = 'queue';
 	},
 
 	/**
@@ -97,14 +107,7 @@ module.exports = {
 
 	// ENUMS //
 	Enums: {
-		LoopStatus: {
-			Enabled: "set_enabled_true",
-			Disabled: "set_enabled_false",
-		},
-	
-		LoopMode: {
-			Queue: "set_mode_queue",
-			Song: "set_mode_song",
-		}
-	}
+		LoopStatus: LoopStatus,
+		LoopMode: LoopMode
+	},	
 };
