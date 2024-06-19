@@ -20,7 +20,7 @@ module.exports = {
 		if(queue.songs.length >= 12) return errorEmbed('The maximum queue length is 12.', embed, message);
 
 		if(!ytdl.validateURL(url)) {
-			url = await yts({query: message.content.slice(7)});
+			url = await yts({query: args.join(' ')});
 			if(url.videos.length == 0) return errorEmbed('No search results found.', embed, message);
 			else url = url.videos[0].url;
 		}
