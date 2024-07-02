@@ -2,6 +2,7 @@ const {EmbedBuilder, Message} = require('discord.js'); // used to require specif
 var looping = {enabled: false, mode: undefined}; // used in loopControl()
 const debounceGaming = {}; // used in checkDebounce()
 var skipVoteCount = 0; // used in skipControl()
+var alreadyVoted = []; // used in skipControl()
 
 // ENUMS (defined here to allow them to be used in the api.js file, don't change unless you've thoroughly tested your change)
 const LoopStatus = {
@@ -107,10 +108,12 @@ module.exports = {
 		return returnValue;
 	},
 
-	skipControl(membercount, queue, option) {
+	skipControl(membercount, queue, option, id) {
+		if(!alreadyVoted.find(e => e == id)) alreadyVoted.push(id);
+		else if(typeof id != 'undefined') return ['dup'];
 		if(typeof option == 'undefined') skipVoteCount += 1;
 		
-		if(option == 'clear') skipVoteCount = 0;
+		if(option == 'clear') {skipVoteCount = 0; alreadyVoted.length = 0;};
 		if(option == 'force') skipVoteCount = process.env.skip_percentage_number; // this looks weird but it works with the maximum member limit of a vc. you gotta trust.
 		
 		const requiredvotes = Math.ceil((membercount - 1) * (process.env.skip_percentage_number / 100));
